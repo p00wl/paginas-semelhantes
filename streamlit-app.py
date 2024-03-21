@@ -55,7 +55,7 @@ def main():
     ''')
     
     uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
-    percent = st.slider('Selecione a porcentagem', min_value=0.0, max_value=1.0, value=0.8, step=0.01)
+    percent = st.slider('Porcentagem de semelhança entre as keywords', min_value=0.0, max_value=1.0, value=0.8, step=0.01)
     
     if st.button('Iniciar'):
         if uploaded_file is not None:
