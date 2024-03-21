@@ -38,7 +38,7 @@ def main():
     2. Na tabela, insira como dimensão os campos Landing Page e Query.
     3. Filtre o período que deseja coletar os dados (sugestão: últimos 30 dias)
     4. Nos três pontos da tabela, clique em exportar para CSV.
-    Verifique o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
+    Verifique se o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
     
     ### Por que exportar os dados pelo Looker Studio?
     O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
