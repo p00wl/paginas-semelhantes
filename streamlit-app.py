@@ -1,19 +1,6 @@
 import pandas as pd
 import streamlit as st
 
-'''
-## Antes de usar
-1. Crie um dashboard no Looker Studio com o gráfico de 'Tabela'.
-2. Na tabela, insira como dimensão os campos Landing Page e Query.
-3. Filtre o período que deseja coletar os dados (sugestão: últimos 30 dias)
-4. Nos três pontos da tabela, clique em exportar para CSV.
-Verifique o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
-
-### Por que exportar os dados pelo Looker Studio?
-O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
-Porém, ainda assim existe limitação. Portanto, a depender do tamanho do seu site, alguns dados podem ser truncados. O ideal é exportar via BigQuery ou outra solução de big data que permita extrair os dados do GSC.
-'''
-
 # Importação de dados do GSC. Colunas necessárias: Landing Page e Query
 def load_data(file):
     gsc_data = pd.read_csv(file)
@@ -43,7 +30,20 @@ def keywords_similares(row, kwd_by_urls_df, percent):
     return urls_similares
 
 def main():
-    st.title("Análise de Keywords")
+    st.title("Encontre páginas semelhantes com dados do GSC")
+
+    '''
+    ## Antes de usar
+    1. Crie um dashboard no Looker Studio com o gráfico de 'Tabela'.
+    2. Na tabela, insira como dimensão os campos Landing Page e Query.
+    3. Filtre o período que deseja coletar os dados (sugestão: últimos 30 dias)
+    4. Nos três pontos da tabela, clique em exportar para CSV.
+    Verifique o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
+    
+    ### Por que exportar os dados pelo Looker Studio?
+    O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
+    Porém, ainda assim existe limitação. Portanto, a depender do tamanho do seu site, alguns dados podem ser truncados. O ideal é exportar via BigQuery ou outra solução de big data que permita extrair os dados do GSC.
+    '''
     
     st.warning('''
     **Aviso de Privacidade**: Este aplicativo permite que você faça upload de um arquivo CSV que pode conter dados sensíveis.
