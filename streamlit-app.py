@@ -2,14 +2,12 @@ import pandas as pd
 import streamlit as st
 
 # Importação de dados do GSC. Colunas necessárias: Landing Page e Query
-@st.cache
 def load_data(file):
     gsc_data = pd.read_csv(file)
     gsc_data = gsc_data[~gsc_data['Landing Page'].str.contains("#")]
     return gsc_data
 
 # Agrupamento de keywords por URL
-@st.cache
 def group_keywords(gsc_data):
     kwd_by_urls = gsc_data.groupby('Landing Page')['Query'].apply(list)
     kwd_by_urls_df = pd.DataFrame(kwd_by_urls)
@@ -33,6 +31,11 @@ def keywords_similares(row, kwd_by_urls_df, percent):
 
 def main():
     st.title("Análise de Keywords")
+    
+    st.warning('''
+    **Aviso de Privacidade**: Este aplicativo permite que você faça upload de um arquivo CSV que pode conter dados sensíveis.
+    Por favor, certifique-se de que você tem permissão para compartilhar esses dados e que eles não contêm informações pessoais identificáveis.
+    ''')
     
     uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
     if uploaded_file is not None:
