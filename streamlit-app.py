@@ -3,8 +3,8 @@ import streamlit as st
 
 # Importação de dados do GSC. Colunas necessárias: Landing Page e Query
 @st.cache
-def load_data():
-    gsc_data = pd.read_csv('') # Caminho dos dados exportados do GSC por você
+def load_data(file):
+    gsc_data = pd.read_csv(file)
     gsc_data = gsc_data[~gsc_data['Landing Page'].str.contains("#")]
     return gsc_data
 
@@ -34,16 +34,18 @@ def keywords_similares(row, kwd_by_urls_df, percent):
 def main():
     st.title("Análise de Keywords")
     
-    gsc_data = load_data()
-    kwd_by_urls_df = group_keywords(gsc_data)
-    
-    percent = st.slider('Selecione a porcentagem', min_value=0.0, max_value=1.0, value=0.8, step=0.01)
-    
-    # Aplicação da função acima e exportação apenas das URLs que ranqueiam para os mesmos termos
-    kwd_by_urls_df['URLs Semelhantes'] = kwd_by_urls_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
-    kwd_by_urls_df = kwd_by_urls_df[kwd_by_urls_df['URLs Semelhantes'].apply(lambda x: len(x) != 0)]
-    
-    st.write(kwd_by_urls_df)
+    uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
+    if uploaded_file is not None:
+        gsc_data = load_data(uploaded_file)
+        kwd_by_urls_df = group_keywords(gsc_data)
+        
+        percent = st.slider('Selecione a porcentagem', min_value=0.0, max_value=1.0, value=0.8, step=0.01)
+        
+        # Aplicação da função acima e exportação apenas das URLs que ranqueiam para os mesmos termos
+        kwd_by_urls_df['URLs Semelhantes'] = kwd_by_urls_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
+        kwd_by_urls_df = kwd_by_urls_df[kwd_by_urls_df['URLs Semelhantes'].apply(lambda x: len(x) != 0)]
+        
+        st.write(kwd_by_urls_df)
 
 if __name__ == "__main__":
     main()
