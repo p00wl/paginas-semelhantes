@@ -4,7 +4,7 @@ import streamlit as st
 # Importação de dados do GSC. Colunas necessárias: Landing Page e Query
 @st.cache
 def load_data():
-    gsc_data = pd.read_csv('dados/lp_mp.csv') # Caminho dos dados exportados do GSC por você
+    gsc_data = pd.read_csv('') # Caminho dos dados exportados do GSC por você
     gsc_data = gsc_data[~gsc_data['Landing Page'].str.contains("#")]
     return gsc_data
 
