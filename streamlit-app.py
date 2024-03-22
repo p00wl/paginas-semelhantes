@@ -47,6 +47,10 @@ def main():
         
         O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
         Porém, ainda assim existe limitação. Portanto, a depender do tamanho do seu site, alguns dados podem ser truncados. O ideal é exportar via BigQuery ou outra solução de big data que permita extrair os dados do GSC.
+        
+        **O que é a porcentagem pedida?**
+
+        É a porcentagem de keyword que uma página compartilha com as demais. Por padrão, definimos 80%. Então, o app vai verificar com quais outras URLs uma determinada página compartilha, no mínimo, 80% das keywords.
         """)
 
     uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
