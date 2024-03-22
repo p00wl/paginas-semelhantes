@@ -1,4 +1,4 @@
-import pandas as pd
+iimport pandas as pd
 import streamlit as st
 import time
 
@@ -50,7 +50,7 @@ def main():
         
         **O que é a porcentagem pedida?**
 
-        É a porcentagem de keyword que uma página compartilha com as demais. Por padrão, definimos 80%. Então, o app vai verificar com quais outras URLs uma determinada página compartilha, no mínimo, 80% das keywords.
+        Define o número de keywords que uma página compartilha com as demais. Por padrão, definimos 80%. Então, o app vai verificar com quais outras URLs uma determinada página compartilha, no mínimo, 80% das keywords. Se for abaixo de 80%, não será considerado.
         """)
 
     uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
