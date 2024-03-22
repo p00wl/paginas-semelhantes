@@ -1,5 +1,7 @@
+
 import pandas as pd
 import streamlit as st
+import time
 
 # Importação de dados do GSC. Colunas necessárias: Landing Page e Query
 def load_data(file):
@@ -19,18 +21,15 @@ def keywords_similares(row, kwd_by_urls_df, percent):
     kwds_atuais = set(row['Query'])
     
     if len(kwds_atuais) < 10:
-        return pd.Series([[], []])
+        return []
     
     urls_similares = []
-    kwds_compartilhadas = []
     for url, queries in kwd_by_urls_df.itertuples():
         if url != url_atual:
-            kwds_url = set(queries)
-            kwds_comum = kwds_url.intersection(kwds_atuais)
-            if len(kwds_comum) >= percent * len(kwds_atuais):
+            kwds_compartilhadas = set(queries).intersection(kwds_atuais)
+            if len(kwds_compartilhadas) >= percent * len(kwds_atuais):
                 urls_similares.append(url)
-                kwds_compartilhadas.append(list(kwds_comum))
-    return pd.Series([urls_similares, kwds_compartilhadas])
+    return urls_similares
 
 def main():
     st.title("Encontre páginas semelhantes com dados do GSC")
@@ -60,16 +59,16 @@ def main():
             progress_bar = st.progress(0)
             
             gsc_data = load_data(uploaded_file)
-            progress_bar.progress(33)  # Atualiza a barra de progresso após a conclusão da função load_data
+            progress_bar.progress(33)  # Atualiza a barra de progresso após a primeira função
             
             kwd_by_urls_df = group_keywords(gsc_data)
-            progress_bar.progress(66)  # Atualiza a barra de progresso após a conclusão da função group_keywords
+            progress_bar.progress(66)  # Atualiza a barra de progresso após a segunda função
             
             # Aplicação da função acima e exportação apenas das URLs que ranqueiam para os mesmos termos
-            kwd_by_urls_df[['URLs Semelhantes', 'Keywords Compartilhadas']] = kwd_by_urls_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
+            kwd_by_urls_df['URLs Semelhantes'] = kwd_by_urls_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
             kwd_by_urls_df = kwd_by_urls_df[kwd_by_urls_df['URLs Semelhantes'].apply(lambda x: len(x) != 0)]
             
-            progress_bar.progress(100)  # Atualiza a barra de progresso após a conclusão da função keywords_similares
+            progress_bar.progress(100)  # Atualiza a barra de progresso após a terceira função
             
             st.write(kwd_by_urls_df)
         else:
