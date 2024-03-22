@@ -32,7 +32,7 @@ def keywords_similares(row, kwd_by_urls_df, percent):
 def main():
     st.title("Encontre páginas semelhantes com dados do GSC")
 
-    with st.beta_expander("Antes de usar"):
+    with st.expander("Antes de usar"):
         st.write("""
         1. Crie um dashboard no Looker Studio com o gráfico de 'Tabela'.
         2. Na tabela, insira como dimensão os campos Landing Page e Query.
@@ -41,7 +41,7 @@ def main():
         Verifique se o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
         """)
 
-    with st.beta_expander("Por que exportar os dados pelo Looker Studio?"):
+    with st.expander("Por que exportar os dados pelo Looker Studio?"):
         st.write("""
         O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
         Porém, ainda assim existe limitação. Portanto, a depender do tamanho do seu site, alguns dados podem ser truncados. O ideal é exportar via BigQuery ou outra solução de big data que permita extrair os dados do GSC.
