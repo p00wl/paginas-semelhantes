@@ -11,24 +11,24 @@ def load_data(file):
 
 # Agrupamento de keywords por URL
 def group_keywords(gsc_data):
-    kwd_by_urls = gsc_data.groupby('Landing Page')['Query'].apply(list)
-    kwd_by_urls_df = pd.DataFrame(kwd_by_urls)
-    return kwd_by_urls_df
+    kwd_by_urls = gsc_data.groupby('Landing Page')['Query'].apply(list).reset_index()
+    kwd_by_urls.columns = ['URL', 'Keywords']
+    return kwd_by_urls
 
 # Função que irá checar as páginas ranqueando para os mesmos termos
 def keywords_similares(row, kwd_by_urls_df, percent):
-    url_atual = row.name
-    kwds_atuais = set(row['Query'])
+    url_atual = row['URL']
+    kwds_atuais = set(row['Keywords'])
     
     if len(kwds_atuais) < 10:
         return []
     
     urls_similares = []
-    for url, queries in kwd_by_urls_df.itertuples():
+    for _, url, queries in kwd_by_urls_df.itertuples():
         if url != url_atual:
             kwds_compartilhadas = set(queries).intersection(kwds_atuais)
             if len(kwds_compartilhadas) >= percent * len(kwds_atuais):
-                urls_similares.append(url)
+                urls_similares.append({'URL': url, 'Keywords Compartilhadas': list(kwds_compartilhadas)})
     return urls_similares
 
 def main():
@@ -62,8 +62,8 @@ def main():
             progress_bar.progress(33)  # Atualiza a barra de progresso após a primeira função
             
             kwd_by_urls_df = group_keywords(gsc_data)
-            progress_bar.progress(66)  # Atualiza a barra de progresso após a segunda função
-            
+            progress_bar.progress(66)  # Atualiza a barra de progresso após a segunda função  
+
             # Aplicação da função acima e exportação apenas das URLs que ranqueiam para os mesmos termos
             kwd_by_urls_df['URLs Semelhantes'] = kwd_by_urls_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
             kwd_by_urls_df = kwd_by_urls_df[kwd_by_urls_df['URLs Semelhantes'].apply(lambda x: len(x) != 0)]
