@@ -32,19 +32,21 @@ def keywords_similares(row, kwd_by_urls_df, percent):
 def main():
     st.title("Encontre páginas semelhantes com dados do GSC")
 
-    '''
-    ### Antes de usar
-    1. Crie um dashboard no Looker Studio com o gráfico de 'Tabela'.
-    2. Na tabela, insira como dimensão os campos Landing Page e Query.
-    3. Filtre o período que deseja coletar os dados (sugestão: últimos 30 dias)
-    4. Nos três pontos da tabela, clique em exportar para CSV.
-    Verifique se o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
-    
-    ### Por que exportar os dados pelo Looker Studio?
-    O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
-    Porém, ainda assim existe limitação. Portanto, a depender do tamanho do seu site, alguns dados podem ser truncados. O ideal é exportar via BigQuery ou outra solução de big data que permita extrair os dados do GSC.
-    '''
-    
+    with st.beta_expander("Antes de usar"):
+        st.write("""
+        1. Crie um dashboard no Looker Studio com o gráfico de 'Tabela'.
+        2. Na tabela, insira como dimensão os campos Landing Page e Query.
+        3. Filtre o período que deseja coletar os dados (sugestão: últimos 30 dias)
+        4. Nos três pontos da tabela, clique em exportar para CSV.
+        Verifique se o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
+        """)
+
+    with st.beta_expander("Por que exportar os dados pelo Looker Studio?"):
+        st.write("""
+        O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
+        Porém, ainda assim existe limitação. Portanto, a depender do tamanho do seu site, alguns dados podem ser truncados. O ideal é exportar via BigQuery ou outra solução de big data que permita extrair os dados do GSC.
+        """)
+
     uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
     percent = st.slider('Porcentagem de palavras compartilhadas', min_value=0.0, max_value=1.0, value=0.8, step=0.01)
     
