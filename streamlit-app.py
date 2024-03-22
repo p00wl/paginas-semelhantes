@@ -57,17 +57,18 @@ def main():
         if uploaded_file is not None:
             # Inicia a barra de progresso
             progress_bar = st.progress(0)
-            for i in range(100):
-                # Atualiza a barra de progresso
-                time.sleep(0.1)
-                progress_bar.progress(i + 1)
             
             gsc_data = load_data(uploaded_file)
+            progress_bar.progress(33)  # Atualiza a barra de progresso após a primeira função
+            
             kwd_by_urls_df = group_keywords(gsc_data)
+            progress_bar.progress(66)  # Atualiza a barra de progresso após a segunda função
             
             # Aplicação da função acima e exportação apenas das URLs que ranqueiam para os mesmos termos
             kwd_by_urls_df['URLs Semelhantes'] = kwd_by_urls_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
             kwd_by_urls_df = kwd_by_urls_df[kwd_by_urls_df['URLs Semelhantes'].apply(lambda x: len(x) != 0)]
+            
+            progress_bar.progress(100)  # Atualiza a barra de progresso após a terceira função
             
             st.write(kwd_by_urls_df)
         else:
