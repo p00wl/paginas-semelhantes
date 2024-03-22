@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import time
 
 # Importação de dados do GSC. Colunas necessárias: Landing Page e Query
 def load_data(file):
