@@ -40,7 +40,8 @@ def main():
         4. Nos três pontos da tabela, clique em exportar para CSV.
         Verifique se o arquivo .csv exportado possui as colunas Landing Page e Query (nomeadas exatamente desta forma)
 
-        Por que exportar os dados pelo Looker Studio?
+        **Por que exportar os dados pelo Looker Studio?**
+        
         O Search Console possui uma limitação de 1000 linhas. No Looker Studio, você pode expandir essa limitação, conseguindo exportar quase tudo que precisa.
         Porém, ainda assim existe limitação. Portanto, a depender do tamanho do seu site, alguns dados podem ser truncados. O ideal é exportar via BigQuery ou outra solução de big data que permita extrair os dados do GSC.
         """)
