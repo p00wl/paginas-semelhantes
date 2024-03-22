@@ -57,6 +57,9 @@ def main():
             gsc_data = load_data(uploaded_file)
             kwd_by_urls_df = group_keywords(gsc_data)
             
+            # Inicia a coluna 'URLs Semelhantes' com listas vazias
+            kwd_by_urls_df['URLs Semelhantes'] = pd.Series([[] for _ in range(len(kwd_by_urls_df))], index=kwd_by_urls_df.index)
+            
             # Inicia a barra de progresso
             progress_bar = st.progress(0)
             total = len(kwd_by_urls_df)
