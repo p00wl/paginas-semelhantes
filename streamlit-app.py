@@ -1,3 +1,4 @@
+
 import pandas as pd
 import streamlit as st
 import time
@@ -54,25 +55,18 @@ def main():
     
     if st.button('Iniciar'):
         if uploaded_file is not None:
+            # Inicia a barra de progresso
+            progress_bar = st.progress(0)
+            for i in range(100):
+                # Atualiza a barra de progresso
+                time.sleep(0.1)
+                progress_bar.progress(i + 1)
+            
             gsc_data = load_data(uploaded_file)
             kwd_by_urls_df = group_keywords(gsc_data)
             
-            # Inicia a coluna 'URLs Semelhantes' com listas vazias
-            kwd_by_urls_df['URLs Semelhantes'] = pd.Series([[] for _ in range(len(kwd_by_urls_df))], index=kwd_by_urls_df.index)
-            
-            # Inicia a barra de progresso
-            progress_bar = st.progress(0)
-            total = len(kwd_by_urls_df)
-            
             # Aplicação da função acima e exportação apenas das URLs que ranqueiam para os mesmos termos
-            for i, row in enumerate(kwd_by_urls_df.itertuples(), 1):
-                row_df = pd.DataFrame([dict(row._asdict())], columns=kwd_by_urls_df.columns)
-                row_df['URLs Semelhantes'] = row_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
-                kwd_by_urls_df.loc[row.Index] = row_df.loc[0]
-                
-                # Atualiza a barra de progresso
-                progress_bar.progress(i / total)
-            
+            kwd_by_urls_df['URLs Semelhantes'] = kwd_by_urls_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
             kwd_by_urls_df = kwd_by_urls_df[kwd_by_urls_df['URLs Semelhantes'].apply(lambda x: len(x) != 0)]
             
             st.write(kwd_by_urls_df)
