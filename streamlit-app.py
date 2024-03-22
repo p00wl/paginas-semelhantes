@@ -53,6 +53,13 @@ def main():
     
     if st.button('Iniciar'):
         if uploaded_file is not None:
+            # Inicia a barra de progresso
+            progress_bar = st.progress(0)
+            for i in range(100):
+                # Atualiza a barra de progresso
+                time.sleep(0.1)
+                progress_bar.progress(i + 1)
+            
             gsc_data = load_data(uploaded_file)
             kwd_by_urls_df = group_keywords(gsc_data)
             
