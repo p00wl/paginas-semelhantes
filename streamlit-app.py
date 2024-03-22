@@ -63,7 +63,7 @@ def main():
             
             # Aplicação da função acima e exportação apenas das URLs que ranqueiam para os mesmos termos
             for i, row in enumerate(kwd_by_urls_df.itertuples(), 1):
-                row_df = pd.DataFrame([row], columns=kwd_by_urls_df.columns)
+                row_df = pd.DataFrame([dict(row._asdict())], columns=kwd_by_urls_df.columns)
                 row_df['URLs Semelhantes'] = row_df.apply(keywords_similares, args=(kwd_by_urls_df, percent), axis=1)
                 kwd_by_urls_df.loc[row.Index] = row_df.loc[0]
                 
