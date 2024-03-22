@@ -33,7 +33,8 @@ def main():
     st.title("Encontre páginas semelhantes com dados do GSC")
 
     with st.expander("Leia antes de usar"):
-        st.write("""
+        st.write("""**Como conseguir os dados do GSC?**
+
         1. Crie um dashboard no Looker Studio com o gráfico de 'Tabela'.
         2. Na tabela, insira como dimensão os campos Landing Page e Query.
         3. Filtre o período que deseja coletar os dados (sugestão: últimos 30 dias)
